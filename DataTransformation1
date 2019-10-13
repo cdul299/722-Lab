@@ -1,1 +1,1686 @@
 
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{DataTransformation1}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{} Must be included at the beginning of each new notebook. Remember to change the app name.}
+        \PY{k+kn}{import} \PY{n+nn}{findspark}
+        \PY{n}{findspark}\PY{o}{.}\PY{n}{init}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/home/ubuntu/spark\PYZhy{}2.1.1\PYZhy{}bin\PYZhy{}hadoop2.7}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{k+kn}{import} \PY{n+nn}{pyspark}
+        \PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{sql} \PY{k}{import} \PY{n}{SparkSession}
+        \PY{n}{spark} \PY{o}{=} \PY{n}{SparkSession}\PY{o}{.}\PY{n}{builder}\PY{o}{.}\PY{n}{appName}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{basics}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{getOrCreate}\PY{p}{(}\PY{p}{)}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{n}{dataset} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{dataset.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{dataset}\PY{p}{)}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{n}{Dataset1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Dataset1.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print} \PY{p}{(}\PY{n}{Dataset1}\PY{p}{)}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{n}{Dataset2} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Dataset2.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print} \PY{p}{(}\PY{n}{Dataset2}\PY{p}{)}
+        \PY{n}{dataset}\PY{o}{=}\PY{n}{pd}\PY{o}{.}\PY{n}{merge}\PY{p}{(}\PY{n}{Dataset1}\PY{p}{,} \PY{n}{Dataset2}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{dataset}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+      Age Attrition     BusinessTravel  DailyRate              Department  \textbackslash{}
+0      41       Yes      Travel\_Rarely       1102                   Sales   
+1      49        No  Travel\_Frequently        279  Research \& Development   
+2      37       Yes      Travel\_Rarely       1373  Research \& Development   
+3      33        No  Travel\_Frequently       1392  Research \& Development   
+4      27        No      Travel\_Rarely        591  Research \& Development   
+5      32        No  Travel\_Frequently       1005  Research \& Development   
+6      59        No      Travel\_Rarely       1324  Research \& Development   
+7      30        No      Travel\_Rarely       1358  Research \& Development   
+8      38        No  Travel\_Frequently        216  Research \& Development   
+9      36        No      Travel\_Rarely       1299  Research \& Development   
+10     35        No      Travel\_Rarely        809  Research \& Development   
+11     29        No      Travel\_Rarely        153  Research \& Development   
+12     31        No      Travel\_Rarely        670  Research \& Development   
+13     34        No      Travel\_Rarely       1346  Research \& Development   
+14     28       Yes      Travel\_Rarely        103  Research \& Development   
+15     29        No      Travel\_Rarely       1389  Research \& Development   
+16     32        No      Travel\_Rarely        334  Research \& Development   
+17     22        No         Non-Travel       1123  Research \& Development   
+18     53        No      Travel\_Rarely       1219                   Sales   
+19     38        No      Travel\_Rarely        371  Research \& Development   
+20     24        No         Non-Travel        673  Research \& Development   
+21     36       Yes      Travel\_Rarely       1218                   Sales   
+22     34        No      Travel\_Rarely        419  Research \& Development   
+23     21        No      Travel\_Rarely        391  Research \& Development   
+24     34       Yes      Travel\_Rarely        699  Research \& Development   
+25     53        No      Travel\_Rarely       1282  Research \& Development   
+26     32       Yes  Travel\_Frequently       1125  Research \& Development   
+27     42        No      Travel\_Rarely        691                   Sales   
+28     44        No      Travel\_Rarely        477  Research \& Development   
+29     46        No      Travel\_Rarely        705                   Sales   
+{\ldots}   {\ldots}       {\ldots}                {\ldots}        {\ldots}                     {\ldots}   
+1440   36        No  Travel\_Frequently        688  Research \& Development   
+1441   56        No         Non-Travel        667  Research \& Development   
+1442   29       Yes      Travel\_Rarely       1092  Research \& Development   
+1443   42        No      Travel\_Rarely        300  Research \& Development   
+1444   56       Yes      Travel\_Rarely        310  Research \& Development   
+1445   41        No      Travel\_Rarely        582  Research \& Development   
+1446   34        No      Travel\_Rarely        704                   Sales   
+1447   36        No         Non-Travel        301                   Sales   
+1448   41        No      Travel\_Rarely        930                   Sales   
+1449   32        No      Travel\_Rarely        529  Research \& Development   
+1450   35        No      Travel\_Rarely       1146         Human Resources   
+1451   38        No      Travel\_Rarely        345                   Sales   
+1452   50       Yes  Travel\_Frequently        878                   Sales   
+1453   36        No      Travel\_Rarely       1120                   Sales   
+1454   45        No      Travel\_Rarely        374                   Sales   
+1455   40        No      Travel\_Rarely       1322  Research \& Development   
+1456   35        No  Travel\_Frequently       1199  Research \& Development   
+1457   40        No      Travel\_Rarely       1194  Research \& Development   
+1458   35        No      Travel\_Rarely        287  Research \& Development   
+1459   29        No      Travel\_Rarely       1378  Research \& Development   
+1460   29        No      Travel\_Rarely        468  Research \& Development   
+1461   50       Yes      Travel\_Rarely        410                   Sales   
+1462   39        No      Travel\_Rarely        722                   Sales   
+1463   31        No         Non-Travel        325  Research \& Development   
+1464   26        No      Travel\_Rarely       1167                   Sales   
+1465   36        No  Travel\_Frequently        884  Research \& Development   
+1466   39        No      Travel\_Rarely        613  Research \& Development   
+1467   27        No      Travel\_Rarely        155  Research \& Development   
+1468   49        No  Travel\_Frequently       1023                   Sales   
+1469   34        No      Travel\_Rarely        628  Research \& Development   
+
+      DistanceFromHome  Education    EducationField  EmployeeCount  \textbackslash{}
+0                    1          2     Life Sciences              1   
+1                    8          1     Life Sciences              1   
+2                    2          2             Other              1   
+3                    3          4     Life Sciences              1   
+4                    2          1           Medical              1   
+5                    2          2     Life Sciences              1   
+6                    3          3           Medical              1   
+7                   24          1     Life Sciences              1   
+8                   23          3     Life Sciences              1   
+9                   27          3           Medical              1   
+10                  16          3           Medical              1   
+11                  15          2     Life Sciences              1   
+12                  26          1     Life Sciences              1   
+13                  19          2           Medical              1   
+14                  24          3     Life Sciences              1   
+15                  21          4     Life Sciences              1   
+16                   5          2     Life Sciences              1   
+17                  16          2           Medical              1   
+18                   2          4     Life Sciences              1   
+19                   2          3     Life Sciences              1   
+20                  11          2             Other              1   
+21                   9          4     Life Sciences              1   
+22                   7          4     Life Sciences              1   
+23                  15          2     Life Sciences              1   
+24                   6          1           Medical              1   
+25                   5          3             Other              1   
+26                  16          1     Life Sciences              1   
+27                   8          4         Marketing              1   
+28                   7          4           Medical              1   
+29                   2          4         Marketing              1   
+{\ldots}                {\ldots}        {\ldots}               {\ldots}            {\ldots}   
+1440                 4          2     Life Sciences              1   
+1441                 1          4     Life Sciences              1   
+1442                 1          4           Medical              1   
+1443                 2          3     Life Sciences              1   
+1444                 7          2  Technical Degree              1   
+1445                28          4     Life Sciences              1   
+1446                28          3         Marketing              1   
+1447                15          4         Marketing              1   
+1448                 3          3     Life Sciences              1   
+1449                 2          3  Technical Degree              1   
+1450                26          4     Life Sciences              1   
+1451                10          2     Life Sciences              1   
+1452                 1          4     Life Sciences              1   
+1453                11          4         Marketing              1   
+1454                20          3     Life Sciences              1   
+1455                 2          4     Life Sciences              1   
+1456                18          4     Life Sciences              1   
+1457                 2          4           Medical              1   
+1458                 1          4     Life Sciences              1   
+1459                13          2             Other              1   
+1460                28          4           Medical              1   
+1461                28          3         Marketing              1   
+1462                24          1         Marketing              1   
+1463                 5          3           Medical              1   
+1464                 5          3             Other              1   
+1465                23          2           Medical              1   
+1466                 6          1           Medical              1   
+1467                 4          3     Life Sciences              1   
+1468                 2          3           Medical              1   
+1469                 8          3           Medical              1   
+
+      EmployeeNumber          {\ldots}           RelationshipSatisfaction  \textbackslash{}
+0                  1          {\ldots}                                  1   
+1                  2          {\ldots}                                  4   
+2                  4          {\ldots}                                  2   
+3                  5          {\ldots}                                  3   
+4                  7          {\ldots}                                  4   
+5                  8          {\ldots}                                  3   
+6                 10          {\ldots}                                  1   
+7                 11          {\ldots}                                  2   
+8                 12          {\ldots}                                  2   
+9                 13          {\ldots}                                  2   
+10                14          {\ldots}                                  3   
+11                15          {\ldots}                                  4   
+12                16          {\ldots}                                  4   
+13                18          {\ldots}                                  3   
+14                19          {\ldots}                                  2   
+15                20          {\ldots}                                  3   
+16                21          {\ldots}                                  4   
+17                22          {\ldots}                                  2   
+18                23          {\ldots}                                  3   
+19                24          {\ldots}                                  3   
+20                26          {\ldots}                                  4   
+21                27          {\ldots}                                  2   
+22                28          {\ldots}                                  3   
+23                30          {\ldots}                                  4   
+24                31          {\ldots}                                  3   
+25                32          {\ldots}                                  4   
+26                33          {\ldots}                                  2   
+27                35          {\ldots}                                  4   
+28                36          {\ldots}                                  4   
+29                38          {\ldots}                                  4   
+{\ldots}              {\ldots}          {\ldots}                                {\ldots}   
+1440            2025          {\ldots}                                  2   
+1441            2026          {\ldots}                                  1   
+1442            2027          {\ldots}                                  2   
+1443            2031          {\ldots}                                  1   
+1444            2032          {\ldots}                                  4   
+1445            2034          {\ldots}                                  3   
+1446            2035          {\ldots}                                  4   
+1447            2036          {\ldots}                                  1   
+1448            2037          {\ldots}                                  3   
+1449            2038          {\ldots}                                  4   
+1450            2040          {\ldots}                                  3   
+1451            2041          {\ldots}                                  3   
+1452            2044          {\ldots}                                  4   
+1453            2045          {\ldots}                                  1   
+1454            2046          {\ldots}                                  3   
+1455            2048          {\ldots}                                  4   
+1456            2049          {\ldots}                                  4   
+1457            2051          {\ldots}                                  2   
+1458            2052          {\ldots}                                  4   
+1459            2053          {\ldots}                                  1   
+1460            2054          {\ldots}                                  2   
+1461            2055          {\ldots}                                  2   
+1462            2056          {\ldots}                                  1   
+1463            2057          {\ldots}                                  2   
+1464            2060          {\ldots}                                  4   
+1465            2061          {\ldots}                                  3   
+1466            2062          {\ldots}                                  1   
+1467            2064          {\ldots}                                  2   
+1468            2065          {\ldots}                                  4   
+1469            2068          {\ldots}                                  1   
+
+     StandardHours  StockOptionLevel  TotalWorkingYears  \textbackslash{}
+0               80                 0                  8   
+1               80                 1                 10   
+2               80                 0                  7   
+3               80                 0                  8   
+4               80                 1                  6   
+5               80                 0                  8   
+6               80                 3                 12   
+7               80                 1                  1   
+8               80                 0                 10   
+9               80                 2                 17   
+10              80                 1                  6   
+11              80                 0                 10   
+12              80                 1                  5   
+13              80                 1                  3   
+14              80                 0                  6   
+15              80                 1                 10   
+16              80                 2                  7   
+17              80                 2                  1   
+18              80                 0                 31   
+19              80                 0                  6   
+20              80                 1                  5   
+21              80                 0                 10   
+22              80                 0                 13   
+23              80                 0                  0   
+24              80                 0                  8   
+25              80                 1                 26   
+26              80                 0                 10   
+27              80                 1                 10   
+28              80                 1                 24   
+29              80                 0                 22   
+{\ldots}            {\ldots}               {\ldots}                {\ldots}   
+1440            80                 3                 18   
+1441            80                 1                 13   
+1442            80                 3                  4   
+1443            80                 0                 24   
+1444            80                 1                 14   
+1445            80                 1                 21   
+1446            80                 2                  8   
+1447            80                 1                 15   
+1448            80                 1                 14   
+1449            80                 0                  4   
+1450            80                 0                  9   
+1451            80                 1                 10   
+1452            80                 2                 12   
+1453            80                 1                  8   
+1454            80                 0                  8   
+1455            80                 0                  8   
+1456            80                 2                 10   
+1457            80                 3                 20   
+1458            80                 1                  4   
+1459            80                 1                 10   
+1460            80                 0                  5   
+1461            80                 1                 20   
+1462            80                 1                 21   
+1463            80                 0                 10   
+1464            80                 0                  5   
+1465            80                 1                 17   
+1466            80                 1                  9   
+1467            80                 1                  6   
+1468            80                 0                 17   
+1469            80                 0                  6   
+
+      TrainingTimesLastYear WorkLifeBalance  YearsAtCompany  \textbackslash{}
+0                         0               1               6   
+1                         3               3              10   
+2                         3               3               0   
+3                         3               3               8   
+4                         3               3               2   
+5                         2               2               7   
+6                         3               2               1   
+7                         2               3               1   
+8                         2               3               9   
+9                         3               2               7   
+10                        5               3               5   
+11                        3               3               9   
+12                        1               2               5   
+13                        2               3               2   
+14                        4               3               4   
+15                        1               3              10   
+16                        5               2               6   
+17                        2               2               1   
+18                        3               3              25   
+19                        3               3               3   
+20                        5               2               4   
+21                        4               3               5   
+22                        4               3              12   
+23                        6               3               0   
+24                        2               3               4   
+25                        3               2              14   
+26                        5               3              10   
+27                        2               3               9   
+28                        4               3              22   
+29                        2               2               2   
+{\ldots}                     {\ldots}             {\ldots}             {\ldots}   
+1440                      3               3               4   
+1441                      2               2              13   
+1442                      3               4               2   
+1443                      2               2              22   
+1444                      4               1              10   
+1445                      3               3              20   
+1446                      2               3               8   
+1447                      4               2              15   
+1448                      5               3               5   
+1449                      4               3               4   
+1450                      2               3               9   
+1451                      1               3              10   
+1452                      3               3               6   
+1453                      2               2               6   
+1454                      3               3               5   
+1455                      2               3               2   
+1456                      2               4              10   
+1457                      2               3               5   
+1458                      5               3               4   
+1459                      2               3               4   
+1460                      3               1               5   
+1461                      3               3               3   
+1462                      2               2              20   
+1463                      2               3               9   
+1464                      2               3               4   
+1465                      3               3               5   
+1466                      5               3               7   
+1467                      0               3               6   
+1468                      3               2               9   
+1469                      3               4               4   
+
+     YearsInCurrentRole  YearsSinceLastPromotion  YearsWithCurrManager  
+0                     4                        0                     5  
+1                     7                        1                     7  
+2                     0                        0                     0  
+3                     7                        3                     0  
+4                     2                        2                     2  
+5                     7                        3                     6  
+6                     0                        0                     0  
+7                     0                        0                     0  
+8                     7                        1                     8  
+9                     7                        7                     7  
+10                    4                        0                     3  
+11                    5                        0                     8  
+12                    2                        4                     3  
+13                    2                        1                     2  
+14                    2                        0                     3  
+15                    9                        8                     8  
+16                    2                        0                     5  
+17                    0                        0                     0  
+18                    8                        3                     7  
+19                    2                        1                     2  
+20                    2                        1                     3  
+21                    3                        0                     3  
+22                    6                        2                    11  
+23                    0                        0                     0  
+24                    2                        1                     3  
+25                   13                        4                     8  
+26                    2                        6                     7  
+27                    7                        4                     2  
+28                    6                        5                    17  
+29                    2                        2                     1  
+{\ldots}                 {\ldots}                      {\ldots}                   {\ldots}  
+1440                  2                        0                     2  
+1441                 12                        1                     9  
+1442                  2                        2                     2  
+1443                  6                        4                    14  
+1444                  9                        9                     8  
+1445                  7                        0                    10  
+1446                  7                        1                     7  
+1447                 12                       11                    11  
+1448                  4                        0                     4  
+1449                  2                        1                     2  
+1450                  0                        1                     7  
+1451                  7                        1                     9  
+1452                  3                        0                     1  
+1453                  3                        0                     0  
+1454                  3                        0                     1  
+1455                  2                        2                     2  
+1456                  2                        0                     2  
+1457                  3                        0                     2  
+1458                  3                        1                     1  
+1459                  3                        0                     3  
+1460                  4                        0                     4  
+1461                  2                        2                     0  
+1462                  9                        9                     6  
+1463                  4                        1                     7  
+1464                  2                        0                     0  
+1465                  2                        0                     3  
+1466                  7                        1                     7  
+1467                  2                        0                     3  
+1468                  6                        0                     8  
+1469                  3                        1                     2  
+
+[1470 rows x 35 columns]
+      Age Attrition     BusinessTravel  DailyRate              Department  \textbackslash{}
+0      41       Yes      Travel\_Rarely       1102                   Sales   
+1      49        No  Travel\_Frequently        279  Research \& Development   
+2      37       Yes      Travel\_Rarely       1373  Research \& Development   
+3      33        No  Travel\_Frequently       1392  Research \& Development   
+4      27        No      Travel\_Rarely        591  Research \& Development   
+5      32        No  Travel\_Frequently       1005  Research \& Development   
+6      59        No      Travel\_Rarely       1324  Research \& Development   
+7      30        No      Travel\_Rarely       1358  Research \& Development   
+8      38        No  Travel\_Frequently        216  Research \& Development   
+9      36        No      Travel\_Rarely       1299  Research \& Development   
+10     35        No      Travel\_Rarely        809  Research \& Development   
+11     29        No      Travel\_Rarely        153  Research \& Development   
+12     31        No      Travel\_Rarely        670  Research \& Development   
+13     34        No      Travel\_Rarely       1346  Research \& Development   
+14     28       Yes      Travel\_Rarely        103  Research \& Development   
+15     29        No      Travel\_Rarely       1389  Research \& Development   
+16     32        No      Travel\_Rarely        334  Research \& Development   
+17     22        No         Non-Travel       1123  Research \& Development   
+18     53        No      Travel\_Rarely       1219                   Sales   
+19     38        No      Travel\_Rarely        371  Research \& Development   
+20     24        No         Non-Travel        673  Research \& Development   
+21     36       Yes      Travel\_Rarely       1218                   Sales   
+22     34        No      Travel\_Rarely        419  Research \& Development   
+23     21        No      Travel\_Rarely        391  Research \& Development   
+24     34       Yes      Travel\_Rarely        699  Research \& Development   
+25     53        No      Travel\_Rarely       1282  Research \& Development   
+26     32       Yes  Travel\_Frequently       1125  Research \& Development   
+27     42        No      Travel\_Rarely        691                   Sales   
+28     44        No      Travel\_Rarely        477  Research \& Development   
+29     46        No      Travel\_Rarely        705                   Sales   
+{\ldots}   {\ldots}       {\ldots}                {\ldots}        {\ldots}                     {\ldots}   
+1440   36        No  Travel\_Frequently        688  Research \& Development   
+1441   56        No         Non-Travel        667  Research \& Development   
+1442   29       Yes      Travel\_Rarely       1092  Research \& Development   
+1443   42        No      Travel\_Rarely        300  Research \& Development   
+1444   56       Yes      Travel\_Rarely        310  Research \& Development   
+1445   41        No      Travel\_Rarely        582  Research \& Development   
+1446   34        No      Travel\_Rarely        704                   Sales   
+1447   36        No         Non-Travel        301                   Sales   
+1448   41        No      Travel\_Rarely        930                   Sales   
+1449   32        No      Travel\_Rarely        529  Research \& Development   
+1450   35        No      Travel\_Rarely       1146         Human Resources   
+1451   38        No      Travel\_Rarely        345                   Sales   
+1452   50       Yes  Travel\_Frequently        878                   Sales   
+1453   36        No      Travel\_Rarely       1120                   Sales   
+1454   45        No      Travel\_Rarely        374                   Sales   
+1455   40        No      Travel\_Rarely       1322  Research \& Development   
+1456   35        No  Travel\_Frequently       1199  Research \& Development   
+1457   40        No      Travel\_Rarely       1194  Research \& Development   
+1458   35        No      Travel\_Rarely        287  Research \& Development   
+1459   29        No      Travel\_Rarely       1378  Research \& Development   
+1460   29        No      Travel\_Rarely        468  Research \& Development   
+1461   50       Yes      Travel\_Rarely        410                   Sales   
+1462   39        No      Travel\_Rarely        722                   Sales   
+1463   31        No         Non-Travel        325  Research \& Development   
+1464   26        No      Travel\_Rarely       1167                   Sales   
+1465   36        No  Travel\_Frequently        884  Research \& Development   
+1466   39        No      Travel\_Rarely        613  Research \& Development   
+1467   27        No      Travel\_Rarely        155  Research \& Development   
+1468   49        No  Travel\_Frequently       1023                   Sales   
+1469   34        No      Travel\_Rarely        628  Research \& Development   
+
+      DistanceFromHome  Education    EducationField  EmployeeCount  \textbackslash{}
+0                    1          2     Life Sciences              1   
+1                    8          1     Life Sciences              1   
+2                    2          2             Other              1   
+3                    3          4     Life Sciences              1   
+4                    2          1           Medical              1   
+5                    2          2     Life Sciences              1   
+6                    3          3           Medical              1   
+7                   24          1     Life Sciences              1   
+8                   23          3     Life Sciences              1   
+9                   27          3           Medical              1   
+10                  16          3           Medical              1   
+11                  15          2     Life Sciences              1   
+12                  26          1     Life Sciences              1   
+13                  19          2           Medical              1   
+14                  24          3     Life Sciences              1   
+15                  21          4     Life Sciences              1   
+16                   5          2     Life Sciences              1   
+17                  16          2           Medical              1   
+18                   2          4     Life Sciences              1   
+19                   2          3     Life Sciences              1   
+20                  11          2             Other              1   
+21                   9          4     Life Sciences              1   
+22                   7          4     Life Sciences              1   
+23                  15          2     Life Sciences              1   
+24                   6          1           Medical              1   
+25                   5          3             Other              1   
+26                  16          1     Life Sciences              1   
+27                   8          4         Marketing              1   
+28                   7          4           Medical              1   
+29                   2          4         Marketing              1   
+{\ldots}                {\ldots}        {\ldots}               {\ldots}            {\ldots}   
+1440                 4          2     Life Sciences              1   
+1441                 1          4     Life Sciences              1   
+1442                 1          4           Medical              1   
+1443                 2          3     Life Sciences              1   
+1444                 7          2  Technical Degree              1   
+1445                28          4     Life Sciences              1   
+1446                28          3         Marketing              1   
+1447                15          4         Marketing              1   
+1448                 3          3     Life Sciences              1   
+1449                 2          3  Technical Degree              1   
+1450                26          4     Life Sciences              1   
+1451                10          2     Life Sciences              1   
+1452                 1          4     Life Sciences              1   
+1453                11          4         Marketing              1   
+1454                20          3     Life Sciences              1   
+1455                 2          4     Life Sciences              1   
+1456                18          4     Life Sciences              1   
+1457                 2          4           Medical              1   
+1458                 1          4     Life Sciences              1   
+1459                13          2             Other              1   
+1460                28          4           Medical              1   
+1461                28          3         Marketing              1   
+1462                24          1         Marketing              1   
+1463                 5          3           Medical              1   
+1464                 5          3             Other              1   
+1465                23          2           Medical              1   
+1466                 6          1           Medical              1   
+1467                 4          3     Life Sciences              1   
+1468                 2          3           Medical              1   
+1469                 8          3           Medical              1   
+
+      EmployeeNumber          {\ldots}           RelationshipSatisfaction  \textbackslash{}
+0                  1          {\ldots}                                  1   
+1                  2          {\ldots}                                  4   
+2                  4          {\ldots}                                  2   
+3                  5          {\ldots}                                  3   
+4                  7          {\ldots}                                  4   
+5                  8          {\ldots}                                  3   
+6                 10          {\ldots}                                  1   
+7                 11          {\ldots}                                  2   
+8                 12          {\ldots}                                  2   
+9                 13          {\ldots}                                  2   
+10                14          {\ldots}                                  3   
+11                15          {\ldots}                                  4   
+12                16          {\ldots}                                  4   
+13                18          {\ldots}                                  3   
+14                19          {\ldots}                                  2   
+15                20          {\ldots}                                  3   
+16                21          {\ldots}                                  4   
+17                22          {\ldots}                                  2   
+18                23          {\ldots}                                  3   
+19                24          {\ldots}                                  3   
+20                26          {\ldots}                                  4   
+21                27          {\ldots}                                  2   
+22                28          {\ldots}                                  3   
+23                30          {\ldots}                                  4   
+24                31          {\ldots}                                  3   
+25                32          {\ldots}                                  4   
+26                33          {\ldots}                                  2   
+27                35          {\ldots}                                  4   
+28                36          {\ldots}                                  4   
+29                38          {\ldots}                                  4   
+{\ldots}              {\ldots}          {\ldots}                                {\ldots}   
+1440            2025          {\ldots}                                  2   
+1441            2026          {\ldots}                                  1   
+1442            2027          {\ldots}                                  2   
+1443            2031          {\ldots}                                  1   
+1444            2032          {\ldots}                                  4   
+1445            2034          {\ldots}                                  3   
+1446            2035          {\ldots}                                  4   
+1447            2036          {\ldots}                                  1   
+1448            2037          {\ldots}                                  3   
+1449            2038          {\ldots}                                  4   
+1450            2040          {\ldots}                                  3   
+1451            2041          {\ldots}                                  3   
+1452            2044          {\ldots}                                  4   
+1453            2045          {\ldots}                                  1   
+1454            2046          {\ldots}                                  3   
+1455            2048          {\ldots}                                  4   
+1456            2049          {\ldots}                                  4   
+1457            2051          {\ldots}                                  2   
+1458            2052          {\ldots}                                  4   
+1459            2053          {\ldots}                                  1   
+1460            2054          {\ldots}                                  2   
+1461            2055          {\ldots}                                  2   
+1462            2056          {\ldots}                                  1   
+1463            2057          {\ldots}                                  2   
+1464            2060          {\ldots}                                  4   
+1465            2061          {\ldots}                                  3   
+1466            2062          {\ldots}                                  1   
+1467            2064          {\ldots}                                  2   
+1468            2065          {\ldots}                                  4   
+1469            2068          {\ldots}                                  1   
+
+     StandardHours  StockOptionLevel  TotalWorkingYears  \textbackslash{}
+0               80                 0                  8   
+1               80                 1                 10   
+2               80                 0                  7   
+3               80                 0                  8   
+4               80                 1                  6   
+5               80                 0                  8   
+6               80                 3                 12   
+7               80                 1                  1   
+8               80                 0                 10   
+9               80                 2                 17   
+10              80                 1                  6   
+11              80                 0                 10   
+12              80                 1                  5   
+13              80                 1                  3   
+14              80                 0                  6   
+15              80                 1                 10   
+16              80                 2                  7   
+17              80                 2                  1   
+18              80                 0                 31   
+19              80                 0                  6   
+20              80                 1                  5   
+21              80                 0                 10   
+22              80                 0                 13   
+23              80                 0                  0   
+24              80                 0                  8   
+25              80                 1                 26   
+26              80                 0                 10   
+27              80                 1                 10   
+28              80                 1                 24   
+29              80                 0                 22   
+{\ldots}            {\ldots}               {\ldots}                {\ldots}   
+1440            80                 3                 18   
+1441            80                 1                 13   
+1442            80                 3                  4   
+1443            80                 0                 24   
+1444            80                 1                 14   
+1445            80                 1                 21   
+1446            80                 2                  8   
+1447            80                 1                 15   
+1448            80                 1                 14   
+1449            80                 0                  4   
+1450            80                 0                  9   
+1451            80                 1                 10   
+1452            80                 2                 12   
+1453            80                 1                  8   
+1454            80                 0                  8   
+1455            80                 0                  8   
+1456            80                 2                 10   
+1457            80                 3                 20   
+1458            80                 1                  4   
+1459            80                 1                 10   
+1460            80                 0                  5   
+1461            80                 1                 20   
+1462            80                 1                 21   
+1463            80                 0                 10   
+1464            80                 0                  5   
+1465            80                 1                 17   
+1466            80                 1                  9   
+1467            80                 1                  6   
+1468            80                 0                 17   
+1469            80                 0                  6   
+
+      TrainingTimesLastYear WorkLifeBalance  YearsAtCompany  \textbackslash{}
+0                         0               1               6   
+1                         3               3              10   
+2                         3               3               0   
+3                         3               3               8   
+4                         3               3               2   
+5                         2               2               7   
+6                         3               2               1   
+7                         2               3               1   
+8                         2               3               9   
+9                         3               2               7   
+10                        5               3               5   
+11                        3               3               9   
+12                        1               2               5   
+13                        2               3               2   
+14                        4               3               4   
+15                        1               3              10   
+16                        5               2               6   
+17                        2               2               1   
+18                        3               3              25   
+19                        3               3               3   
+20                        5               2               4   
+21                        4               3               5   
+22                        4               3              12   
+23                        6               3               0   
+24                        2               3               4   
+25                        3               2              14   
+26                        5               3              10   
+27                        2               3               9   
+28                        4               3              22   
+29                        2               2               2   
+{\ldots}                     {\ldots}             {\ldots}             {\ldots}   
+1440                      3               3               4   
+1441                      2               2              13   
+1442                      3               4               2   
+1443                      2               2              22   
+1444                      4               1              10   
+1445                      3               3              20   
+1446                      2               3               8   
+1447                      4               2              15   
+1448                      5               3               5   
+1449                      4               3               4   
+1450                      2               3               9   
+1451                      1               3              10   
+1452                      3               3               6   
+1453                      2               2               6   
+1454                      3               3               5   
+1455                      2               3               2   
+1456                      2               4              10   
+1457                      2               3               5   
+1458                      5               3               4   
+1459                      2               3               4   
+1460                      3               1               5   
+1461                      3               3               3   
+1462                      2               2              20   
+1463                      2               3               9   
+1464                      2               3               4   
+1465                      3               3               5   
+1466                      5               3               7   
+1467                      0               3               6   
+1468                      3               2               9   
+1469                      3               4               4   
+
+     YearsInCurrentRole  YearsSinceLastPromotion  YearsWithCurrManager  
+0                     4                        0                     5  
+1                     7                        1                     7  
+2                     0                        0                     0  
+3                     7                        3                     0  
+4                     2                        2                     2  
+5                     7                        3                     6  
+6                     0                        0                     0  
+7                     0                        0                     0  
+8                     7                        1                     8  
+9                     7                        7                     7  
+10                    4                        0                     3  
+11                    5                        0                     8  
+12                    2                        4                     3  
+13                    2                        1                     2  
+14                    2                        0                     3  
+15                    9                        8                     8  
+16                    2                        0                     5  
+17                    0                        0                     0  
+18                    8                        3                     7  
+19                    2                        1                     2  
+20                    2                        1                     3  
+21                    3                        0                     3  
+22                    6                        2                    11  
+23                    0                        0                     0  
+24                    2                        1                     3  
+25                   13                        4                     8  
+26                    2                        6                     7  
+27                    7                        4                     2  
+28                    6                        5                    17  
+29                    2                        2                     1  
+{\ldots}                 {\ldots}                      {\ldots}                   {\ldots}  
+1440                  2                        0                     2  
+1441                 12                        1                     9  
+1442                  2                        2                     2  
+1443                  6                        4                    14  
+1444                  9                        9                     8  
+1445                  7                        0                    10  
+1446                  7                        1                     7  
+1447                 12                       11                    11  
+1448                  4                        0                     4  
+1449                  2                        1                     2  
+1450                  0                        1                     7  
+1451                  7                        1                     9  
+1452                  3                        0                     1  
+1453                  3                        0                     0  
+1454                  3                        0                     1  
+1455                  2                        2                     2  
+1456                  2                        0                     2  
+1457                  3                        0                     2  
+1458                  3                        1                     1  
+1459                  3                        0                     3  
+1460                  4                        0                     4  
+1461                  2                        2                     0  
+1462                  9                        9                     6  
+1463                  4                        1                     7  
+1464                  2                        0                     0  
+1465                  2                        0                     3  
+1466                  7                        1                     7  
+1467                  2                        0                     3  
+1468                  6                        0                     8  
+1469                  3                        1                     2  
+
+[1470 rows x 34 columns]
+      MonthlyIncome
+0              5993
+1              5130
+2              2090
+3              2909
+4              3468
+5              3068
+6              2670
+7              2693
+8              9526
+9              5237
+10             2426
+11             4193
+12             2911
+13             2661
+14             2028
+15             9980
+16             3298
+17             2935
+18            15427
+19             3944
+20             4011
+21             3407
+22            11994
+23             1232
+24             2960
+25            19094
+26             3919
+27             6825
+28            10248
+29            18947
+{\ldots}             {\ldots}
+1440           5131
+1441           6306
+1442           4787
+1443          18880
+1444           2339
+1445          13570
+1446           6712
+1447           5406
+1448           8938
+1449           2439
+1450           8837
+1451           5343
+1452           6728
+1453           6652
+1454           4850
+1455           2809
+1456           5689
+1457           2001
+1458           2977
+1459           4025
+1460           3785
+1461          10854
+1462          12031
+1463           9936
+1464           2966
+1465           2571
+1466           9991
+1467           6142
+1468           5390
+1469           4404
+
+[1470 rows x 1 columns]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        MergeError                                Traceback (most recent call last)
+
+        <ipython-input-1-c2ebcfc206b2> in <module>()
+         14 Dataset2 = pd.read\_csv("Dataset2.csv")
+         15 print (Dataset2)
+    ---> 16 dataset=pd.merge(Dataset1, Dataset2)
+         17 print(dataset)
+
+
+        \textasciitilde{}/.local/lib/python3.5/site-packages/pandas/core/reshape/merge.py in merge(left, right, how, on, left\_on, right\_on, left\_index, right\_index, sort, suffixes, copy, indicator, validate)
+         59                          right\_index=right\_index, sort=sort, suffixes=suffixes,
+         60                          copy=copy, indicator=indicator,
+    ---> 61                          validate=validate)
+         62     return op.get\_result()
+         63 
+
+
+        \textasciitilde{}/.local/lib/python3.5/site-packages/pandas/core/reshape/merge.py in \_\_init\_\_(self, left, right, how, on, left\_on, right\_on, axis, left\_index, right\_index, sort, suffixes, copy, indicator, validate)
+        544             warnings.warn(msg, UserWarning)
+        545 
+    --> 546         self.\_validate\_specification()
+        547 
+        548         \# note this function has side effects
+
+
+        \textasciitilde{}/.local/lib/python3.5/site-packages/pandas/core/reshape/merge.py in \_validate\_specification(self)
+       1033                         'left\_index=\{lidx\}, right\_index=\{ridx\}'
+       1034                         .format(lon=self.left\_on, ron=self.right\_on,
+    -> 1035                                 lidx=self.left\_index, ridx=self.right\_index))
+       1036                 if not common\_cols.is\_unique:
+       1037                     raise MergeError("Data columns not unique: \{common!r\}"
+
+
+        MergeError: No common columns to perform merge on. Merge options: left\_on=None, right\_on=None, left\_index=False, right\_index=False
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+         
+        \PY{c+c1}{\PYZsh{}Create a DataFrame}
+        \PY{n}{df1} \PY{o}{=} \PY{p}{\PYZob{}}
+        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Attrition}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Yes}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{No}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{is\PYZus{}promoted}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{\PYZcb{}}
+         
+        \PY{n}{df1} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{df1}\PY{p}{,}\PY{n}{columns}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Attrition}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{is\PYZus{}promoted}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{df1}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} importing pandas package  }
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}  
+            
+        \PY{c+c1}{\PYZsh{} making data frame from csv file  }
+        \PY{n}{dataset} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{dataset.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}  
+            
+        \PY{c+c1}{\PYZsh{} creating bool series True for NaN values  }
+        \PY{n}{bool\PYZus{}series} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{n}{dataset}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Attrition}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}  
+            
+        \PY{c+c1}{\PYZsh{} filtering data  }
+        \PY{c+c1}{\PYZsh{} displaying data only with Gender = NaN  }
+        \PY{n}{dataset}\PY{p}{[}\PY{n}{bool\PYZus{}series}\PY{p}{]}  
+        \PY{c+c1}{\PYZsh{} importing pandas package  }
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}  
+            
+        \PY{c+c1}{\PYZsh{} making data frame from csv file  }
+        \PY{n}{dataset} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{dataset.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}  
+            
+        \PY{c+c1}{\PYZsh{} creating bool series True for NaN values  }
+        \PY{n}{bool\PYZus{}series} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{n}{dataset}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{YearsAtCompany}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}  
+            
+        \PY{c+c1}{\PYZsh{} filtering data  }
+        \PY{c+c1}{\PYZsh{} displaying data only with Gender = NaN  }
+        \PY{n}{dataset}\PY{p}{[}\PY{n}{bool\PYZus{}series}\PY{p}{]}  
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+  Attrition is\_promoted
+0       Yes           1
+1        No           0
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}2}]:} Empty DataFrame
+        Columns: [Age, Attrition, BusinessTravel, DailyRate, Department, DistanceFromHome, Education, EducationField, EmployeeCount, EmployeeNumber, EnvironmentSatisfaction, Gender, HourlyRate, JobInvolvement, JobLevel, JobRole, JobSatisfaction, MaritalStatus, MonthlyIncome, MonthlyRate, NumCompaniesWorked, Over18, OverTime, PercentSalaryHike, PerformanceRating, RelationshipSatisfaction, StandardHours, StockOptionLevel, TotalWorkingYears, TrainingTimesLastYear, WorkLifeBalance, YearsAtCompany, YearsInCurrentRole, YearsSinceLastPromotion, YearsWithCurrManager]
+        Index: []
+        
+        [0 rows x 35 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{dataset}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:}                Age    DailyRate  DistanceFromHome    Education  EmployeeCount  \textbackslash{}
+        count  1470.000000  1470.000000       1470.000000  1470.000000         1470.0   
+        mean     36.923810   802.485714          9.192517     2.912925            1.0   
+        std       9.135373   403.509100          8.106864     1.024165            0.0   
+        min      18.000000   102.000000          1.000000     1.000000            1.0   
+        25\%      30.000000   465.000000          2.000000     2.000000            1.0   
+        50\%      36.000000   802.000000          7.000000     3.000000            1.0   
+        75\%      43.000000  1157.000000         14.000000     4.000000            1.0   
+        max      60.000000  1499.000000         29.000000     5.000000            1.0   
+        
+               EmployeeNumber  EnvironmentSatisfaction   HourlyRate  JobInvolvement  \textbackslash{}
+        count     1470.000000              1470.000000  1470.000000     1470.000000   
+        mean      1024.865306                 2.721769    65.891156        2.729932   
+        std        602.024335                 1.093082    20.329428        0.711561   
+        min          1.000000                 1.000000    30.000000        1.000000   
+        25\%        491.250000                 2.000000    48.000000        2.000000   
+        50\%       1020.500000                 3.000000    66.000000        3.000000   
+        75\%       1555.750000                 4.000000    83.750000        3.000000   
+        max       2068.000000                 4.000000   100.000000        4.000000   
+        
+                  JobLevel          {\ldots}           RelationshipSatisfaction  \textbackslash{}
+        count  1470.000000          {\ldots}                        1470.000000   
+        mean      2.063946          {\ldots}                           2.712245   
+        std       1.106940          {\ldots}                           1.081209   
+        min       1.000000          {\ldots}                           1.000000   
+        25\%       1.000000          {\ldots}                           2.000000   
+        50\%       2.000000          {\ldots}                           3.000000   
+        75\%       3.000000          {\ldots}                           4.000000   
+        max       5.000000          {\ldots}                           4.000000   
+        
+               StandardHours  StockOptionLevel  TotalWorkingYears  \textbackslash{}
+        count         1470.0       1470.000000        1470.000000   
+        mean            80.0          0.793878          11.279592   
+        std              0.0          0.852077           7.780782   
+        min             80.0          0.000000           0.000000   
+        25\%             80.0          0.000000           6.000000   
+        50\%             80.0          1.000000          10.000000   
+        75\%             80.0          1.000000          15.000000   
+        max             80.0          3.000000          40.000000   
+        
+               TrainingTimesLastYear  WorkLifeBalance  YearsAtCompany  \textbackslash{}
+        count            1470.000000      1470.000000     1470.000000   
+        mean                2.799320         2.761224        7.008163   
+        std                 1.289271         0.706476        6.126525   
+        min                 0.000000         1.000000        0.000000   
+        25\%                 2.000000         2.000000        3.000000   
+        50\%                 3.000000         3.000000        5.000000   
+        75\%                 3.000000         3.000000        9.000000   
+        max                 6.000000         4.000000       40.000000   
+        
+               YearsInCurrentRole  YearsSinceLastPromotion  YearsWithCurrManager  
+        count         1470.000000              1470.000000           1470.000000  
+        mean             4.229252                 2.187755              4.123129  
+        std              3.623137                 3.222430              3.568136  
+        min              0.000000                 0.000000              0.000000  
+        25\%              2.000000                 0.000000              2.000000  
+        50\%              3.000000                 1.000000              3.000000  
+        75\%              7.000000                 3.000000              7.000000  
+        max             18.000000                15.000000             17.000000  
+        
+        [8 rows x 26 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{} Must be included at the beginning of each new notebook. Remember to change the app name.}
+        \PY{k+kn}{import} \PY{n+nn}{findspark}
+        \PY{n}{findspark}\PY{o}{.}\PY{n}{init}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/home/ubuntu/spark\PYZhy{}2.1.1\PYZhy{}bin\PYZhy{}hadoop2.7}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{k+kn}{import} \PY{n+nn}{pyspark}
+        \PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{sql} \PY{k}{import} \PY{n}{SparkSession}
+        \PY{n}{spark} \PY{o}{=} \PY{n}{SparkSession}\PY{o}{.}\PY{n}{builder}\PY{o}{.}\PY{n}{appName}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{basics}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{getOrCreate}\PY{p}{(}\PY{p}{)}
+        \PY{n}{dataset}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+        \PY{k}{for} \PY{n}{item} \PY{o+ow}{in} \PY{n}{dataset}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{item}\PY{p}{)}
+        \PY{n}{df} \PY{o}{=} \PY{n}{spark}\PY{o}{.}\PY{n}{read}\PY{o}{.}\PY{n}{csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{dataset.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{df}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+        \PY{n}{df}\PY{o}{.}\PY{n}{columns}
+        \PY{n}{df}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+        \PY{n}{df}\PY{o}{.}\PY{n}{printSchema}\PY{p}{(}\PY{p}{)}
+        \PY{n}{dataset}\PY{o}{.}\PY{n}{printSchema}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Age
+Attrition
+BusinessTravel
+DailyRate
+Department
+DistanceFromHome
+Education
+EducationField
+EmployeeCount
+EmployeeNumber
+EnvironmentSatisfaction
+Gender
+HourlyRate
+JobInvolvement
+JobLevel
+JobRole
+JobSatisfaction
+MaritalStatus
+MonthlyIncome
+MonthlyRate
+NumCompaniesWorked
+Over18
+OverTime
+PercentSalaryHike
+PerformanceRating
+RelationshipSatisfaction
+StandardHours
+StockOptionLevel
+TotalWorkingYears
+TrainingTimesLastYear
+WorkLifeBalance
+YearsAtCompany
+YearsInCurrentRole
+YearsSinceLastPromotion
+YearsWithCurrManager
++---+---------+-----------------+---------+--------------------+----------------+---------+--------------+-------------+--------------+--------------------+------+----------+--------------+--------+--------------------+---------------+-------------+-------------+-----------+------------------+------+--------+-----------------+-----------------+--------------------+-------------+----------------+-----------------+--------------------+---------------+--------------+------------------+--------------------+--------------------+
+|\_c0|      \_c1|              \_c2|      \_c3|                 \_c4|             \_c5|      \_c6|           \_c7|          \_c8|           \_c9|                \_c10|  \_c11|      \_c12|          \_c13|    \_c14|                \_c15|           \_c16|         \_c17|         \_c18|       \_c19|              \_c20|  \_c21|    \_c22|             \_c23|             \_c24|                \_c25|         \_c26|            \_c27|             \_c28|                \_c29|           \_c30|          \_c31|              \_c32|                \_c33|                \_c34|
++---+---------+-----------------+---------+--------------------+----------------+---------+--------------+-------------+--------------+--------------------+------+----------+--------------+--------+--------------------+---------------+-------------+-------------+-----------+------------------+------+--------+-----------------+-----------------+--------------------+-------------+----------------+-----------------+--------------------+---------------+--------------+------------------+--------------------+--------------------+
+|Age|Attrition|   BusinessTravel|DailyRate|          Department|DistanceFromHome|Education|EducationField|EmployeeCount|EmployeeNumber|EnvironmentSatisf{\ldots}|Gender|HourlyRate|JobInvolvement|JobLevel|             JobRole|JobSatisfaction|MaritalStatus|MonthlyIncome|MonthlyRate|NumCompaniesWorked|Over18|OverTime|PercentSalaryHike|PerformanceRating|RelationshipSatis{\ldots}|StandardHours|StockOptionLevel|TotalWorkingYears|TrainingTimesLast{\ldots}|WorkLifeBalance|YearsAtCompany|YearsInCurrentRole|YearsSinceLastPro{\ldots}|YearsWithCurrManager|
+| 41|      Yes|    Travel\_Rarely|     1102|               Sales|               1|        2| Life Sciences|            1|             1|                   2|Female|        94|             3|       2|     Sales Executive|              4|       Single|         5993|      19479|                 8|     Y|     Yes|               11|                3|                   1|           80|               0|                8|                   0|              1|             6|                 4|                   0|                   5|
+| 49|       No|Travel\_Frequently|      279|Research \& Develo{\ldots}|               8|        1| Life Sciences|            1|             2|                   3|  Male|        61|             2|       2|  Research Scientist|              2|      Married|         5130|      24907|                 1|     Y|      No|               23|                4|                   4|           80|               1|               10|                   3|              3|            10|                 7|                   1|                   7|
+| 37|      Yes|    Travel\_Rarely|     1373|Research \& Develo{\ldots}|               2|        2|         Other|            1|             4|                   4|  Male|        92|             2|       1|Laboratory Techni{\ldots}|              3|       Single|         2090|       2396|                 6|     Y|     Yes|               15|                3|                   2|           80|               0|                7|                   3|              3|             0|                 0|                   0|                   0|
+| 33|       No|Travel\_Frequently|     1392|Research \& Develo{\ldots}|               3|        4| Life Sciences|            1|             5|                   4|Female|        56|             3|       1|  Research Scientist|              3|      Married|         2909|      23159|                 1|     Y|     Yes|               11|                3|                   3|           80|               0|                8|                   3|              3|             8|                 7|                   3|                   0|
+| 27|       No|    Travel\_Rarely|      591|Research \& Develo{\ldots}|               2|        1|       Medical|            1|             7|                   1|  Male|        40|             3|       1|Laboratory Techni{\ldots}|              2|      Married|         3468|      16632|                 9|     Y|      No|               12|                3|                   4|           80|               1|                6|                   3|              3|             2|                 2|                   2|                   2|
+| 32|       No|Travel\_Frequently|     1005|Research \& Develo{\ldots}|               2|        2| Life Sciences|            1|             8|                   4|  Male|        79|             3|       1|Laboratory Techni{\ldots}|              4|       Single|         3068|      11864|                 0|     Y|      No|               13|                3|                   3|           80|               0|                8|                   2|              2|             7|                 7|                   3|                   6|
+| 59|       No|    Travel\_Rarely|     1324|Research \& Develo{\ldots}|               3|        3|       Medical|            1|            10|                   3|Female|        81|             4|       1|Laboratory Techni{\ldots}|              1|      Married|         2670|       9964|                 4|     Y|     Yes|               20|                4|                   1|           80|               3|               12|                   3|              2|             1|                 0|                   0|                   0|
+| 30|       No|    Travel\_Rarely|     1358|Research \& Develo{\ldots}|              24|        1| Life Sciences|            1|            11|                   4|  Male|        67|             3|       1|Laboratory Techni{\ldots}|              3|     Divorced|         2693|      13335|                 1|     Y|      No|               22|                4|                   2|           80|               1|                1|                   2|              3|             1|                 0|                   0|                   0|
+| 38|       No|Travel\_Frequently|      216|Research \& Develo{\ldots}|              23|        3| Life Sciences|            1|            12|                   4|  Male|        44|             2|       3|Manufacturing Dir{\ldots}|              3|       Single|         9526|       8787|                 0|     Y|      No|               21|                4|                   2|           80|               0|               10|                   2|              3|             9|                 7|                   1|                   8|
+| 36|       No|    Travel\_Rarely|     1299|Research \& Develo{\ldots}|              27|        3|       Medical|            1|            13|                   3|  Male|        94|             3|       2|Healthcare Repres{\ldots}|              3|      Married|         5237|      16577|                 6|     Y|      No|               13|                3|                   2|           80|               2|               17|                   3|              2|             7|                 7|                   7|                   7|
+| 35|       No|    Travel\_Rarely|      809|Research \& Develo{\ldots}|              16|        3|       Medical|            1|            14|                   1|  Male|        84|             4|       1|Laboratory Techni{\ldots}|              2|      Married|         2426|      16479|                 0|     Y|      No|               13|                3|                   3|           80|               1|                6|                   5|              3|             5|                 4|                   0|                   3|
+| 29|       No|    Travel\_Rarely|      153|Research \& Develo{\ldots}|              15|        2| Life Sciences|            1|            15|                   4|Female|        49|             2|       2|Laboratory Techni{\ldots}|              3|       Single|         4193|      12682|                 0|     Y|     Yes|               12|                3|                   4|           80|               0|               10|                   3|              3|             9|                 5|                   0|                   8|
+| 31|       No|    Travel\_Rarely|      670|Research \& Develo{\ldots}|              26|        1| Life Sciences|            1|            16|                   1|  Male|        31|             3|       1|  Research Scientist|              3|     Divorced|         2911|      15170|                 1|     Y|      No|               17|                3|                   4|           80|               1|                5|                   1|              2|             5|                 2|                   4|                   3|
+| 34|       No|    Travel\_Rarely|     1346|Research \& Develo{\ldots}|              19|        2|       Medical|            1|            18|                   2|  Male|        93|             3|       1|Laboratory Techni{\ldots}|              4|     Divorced|         2661|       8758|                 0|     Y|      No|               11|                3|                   3|           80|               1|                3|                   2|              3|             2|                 2|                   1|                   2|
+| 28|      Yes|    Travel\_Rarely|      103|Research \& Develo{\ldots}|              24|        3| Life Sciences|            1|            19|                   3|  Male|        50|             2|       1|Laboratory Techni{\ldots}|              3|       Single|         2028|      12947|                 5|     Y|     Yes|               14|                3|                   2|           80|               0|                6|                   4|              3|             4|                 2|                   0|                   3|
+| 29|       No|    Travel\_Rarely|     1389|Research \& Develo{\ldots}|              21|        4| Life Sciences|            1|            20|                   2|Female|        51|             4|       3|Manufacturing Dir{\ldots}|              1|     Divorced|         9980|      10195|                 1|     Y|      No|               11|                3|                   3|           80|               1|               10|                   1|              3|            10|                 9|                   8|                   8|
+| 32|       No|    Travel\_Rarely|      334|Research \& Develo{\ldots}|               5|        2| Life Sciences|            1|            21|                   1|  Male|        80|             4|       1|  Research Scientist|              2|     Divorced|         3298|      15053|                 0|     Y|     Yes|               12|                3|                   4|           80|               2|                7|                   5|              2|             6|                 2|                   0|                   5|
+| 22|       No|       Non-Travel|     1123|Research \& Develo{\ldots}|              16|        2|       Medical|            1|            22|                   4|  Male|        96|             4|       1|Laboratory Techni{\ldots}|              4|     Divorced|         2935|       7324|                 1|     Y|     Yes|               13|                3|                   2|           80|               2|                1|                   2|              2|             1|                 0|                   0|                   0|
+| 53|       No|    Travel\_Rarely|     1219|               Sales|               2|        4| Life Sciences|            1|            23|                   1|Female|        78|             2|       4|             Manager|              4|      Married|        15427|      22021|                 2|     Y|      No|               16|                3|                   3|           80|               0|               31|                   3|              3|            25|                 8|                   3|                   7|
++---+---------+-----------------+---------+--------------------+----------------+---------+--------------+-------------+--------------+--------------------+------+----------+--------------+--------+--------------------+---------------+-------------+-------------+-----------+------------------+------+--------+-----------------+-----------------+--------------------+-------------+----------------+-----------------+--------------------+---------------+--------------+------------------+--------------------+--------------------+
+only showing top 20 rows
+
++-------+------------------+---------+--------------+------------------+----------+----------------+------------------+----------------+-------------+-----------------+--------------------+------+------------------+------------------+------------------+--------------------+------------------+--------+-----------------+------------------+------------------+------+----+------------------+-------------------+--------------------+-------------+------------------+------------------+--------------------+------------------+------------------+------------------+--------------------+--------------------+
+|summary|               \_c0|      \_c1|           \_c2|               \_c3|       \_c4|             \_c5|               \_c6|             \_c7|          \_c8|              \_c9|                \_c10|  \_c11|              \_c12|              \_c13|              \_c14|                \_c15|              \_c16|    \_c17|             \_c18|              \_c19|              \_c20|  \_c21|\_c22|              \_c23|               \_c24|                \_c25|         \_c26|              \_c27|              \_c28|                \_c29|              \_c30|              \_c31|              \_c32|                \_c33|                \_c34|
++-------+------------------+---------+--------------+------------------+----------+----------------+------------------+----------------+-------------+-----------------+--------------------+------+------------------+------------------+------------------+--------------------+------------------+--------+-----------------+------------------+------------------+------+----+------------------+-------------------+--------------------+-------------+------------------+------------------+--------------------+------------------+------------------+------------------+--------------------+--------------------+
+|  count|              1471|     1471|          1471|              1471|      1471|            1471|              1471|            1471|         1471|             1471|                1471|  1471|              1471|              1471|              1471|                1471|              1471|    1471|             1471|              1471|              1471|  1471|1471|              1471|               1471|                1471|         1471|              1471|              1471|                1471|              1471|              1471|              1471|                1471|                1471|
+|   mean|36.923809523809524|     null|          null| 802.4857142857143|      null|9.19251700680272| 2.912925170068027|            null|          1.0|1024.865306122449|   2.721768707482993|  null| 65.89115646258503|2.7299319727891156|2.0639455782312925|                null|2.7285714285714286|    null|6502.931292517007|14313.103401360544|2.6931972789115646|  null|null|15.209523809523809| 3.1537414965986397|  2.7122448979591836|         80.0|0.7938775510204081|11.279591836734694|  2.7993197278911564|2.7612244897959184|7.0081632653061225| 4.229251700680272|  2.1877551020408164|    4.12312925170068|
+| stddev| 9.135373489136729|     null|          null|403.50909994352804|      null|8.10686443566608|1.0241649445978718|            null|          0.0|602.0243348474752|  1.0930822146350003|  null|20.329427593996176|0.7115611429632297|1.1069398989351202|                null|1.1028461230547213|    null|4707.956783097992| 7117.786044059972|2.4980090060707463|  null|null|3.6599377165396385|0.36082352460434397|  1.0812088864403517|          0.0|0.8520766679308381| 7.780781675514995|  1.2892706207958466|0.7064758297141507| 6.126525152403571| 3.623137034670627|  3.2224302791379693|  3.5681361205404363|
+|    min|                18|Attrition|BusinessTravel|              1001|Department|               1|                 1|  EducationField|            1|                1|                   1|Female|               100|                 1|                 1|Healthcare Repres{\ldots}|                 1|Divorced|            10008|             10007|                 0|Over18|  No|                11|                  3|                   1|           80|                 0|                 0|                   0|                 1|                 0|                 0|                   0|                   0|
+|    max|               Age|      Yes| Travel\_Rarely|         DailyRate|     Sales|DistanceFromHome|         Education|Technical Degree|EmployeeCount|   EmployeeNumber|EnvironmentSatisf{\ldots}|  Male|        HourlyRate|    JobInvolvement|          JobLevel|Sales Representative|   JobSatisfaction|  Single|    MonthlyIncome|       MonthlyRate|NumCompaniesWorked|     Y| Yes| PercentSalaryHike|  PerformanceRating|RelationshipSatis{\ldots}|StandardHours|  StockOptionLevel| TotalWorkingYears|TrainingTimesLast{\ldots}|   WorkLifeBalance|    YearsAtCompany|YearsInCurrentRole|YearsSinceLastPro{\ldots}|YearsWithCurrManager|
++-------+------------------+---------+--------------+------------------+----------+----------------+------------------+----------------+-------------+-----------------+--------------------+------+------------------+------------------+------------------+--------------------+------------------+--------+-----------------+------------------+------------------+------+----+------------------+-------------------+--------------------+-------------+------------------+------------------+--------------------+------------------+------------------+------------------+--------------------+--------------------+
+
+root
+ |-- \_c0: string (nullable = true)
+ |-- \_c1: string (nullable = true)
+ |-- \_c2: string (nullable = true)
+ |-- \_c3: string (nullable = true)
+ |-- \_c4: string (nullable = true)
+ |-- \_c5: string (nullable = true)
+ |-- \_c6: string (nullable = true)
+ |-- \_c7: string (nullable = true)
+ |-- \_c8: string (nullable = true)
+ |-- \_c9: string (nullable = true)
+ |-- \_c10: string (nullable = true)
+ |-- \_c11: string (nullable = true)
+ |-- \_c12: string (nullable = true)
+ |-- \_c13: string (nullable = true)
+ |-- \_c14: string (nullable = true)
+ |-- \_c15: string (nullable = true)
+ |-- \_c16: string (nullable = true)
+ |-- \_c17: string (nullable = true)
+ |-- \_c18: string (nullable = true)
+ |-- \_c19: string (nullable = true)
+ |-- \_c20: string (nullable = true)
+ |-- \_c21: string (nullable = true)
+ |-- \_c22: string (nullable = true)
+ |-- \_c23: string (nullable = true)
+ |-- \_c24: string (nullable = true)
+ |-- \_c25: string (nullable = true)
+ |-- \_c26: string (nullable = true)
+ |-- \_c27: string (nullable = true)
+ |-- \_c28: string (nullable = true)
+ |-- \_c29: string (nullable = true)
+ |-- \_c30: string (nullable = true)
+ |-- \_c31: string (nullable = true)
+ |-- \_c32: string (nullable = true)
+ |-- \_c33: string (nullable = true)
+ |-- \_c34: string (nullable = true)
+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        AttributeError                            Traceback (most recent call last)
+
+        <ipython-input-4-cb4ef8622f11> in <module>()
+         13 df.describe().show()
+         14 df.printSchema()
+    ---> 15 dataset.printSchema()
+    
+
+        \textasciitilde{}/.local/lib/python3.5/site-packages/pandas/core/generic.py in \_\_getattr\_\_(self, name)
+       4374             if self.\_info\_axis.\_can\_hold\_identifiers\_and\_holds\_name(name):
+       4375                 return self[name]
+    -> 4376             return object.\_\_getattribute\_\_(self, name)
+       4377 
+       4378     def \_\_setattr\_\_(self, name, value):
+
+
+        AttributeError: 'DataFrame' object has no attribute 'printSchema'
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{ml}\PY{n+nn}{.}\PY{n+nn}{feature} \PY{k}{import} \PY{p}{(}\PY{n}{VectorAssembler}\PY{p}{,}\PY{n}{VectorIndexer}\PY{p}{,}
+                                        \PY{n}{OneHotEncoder}\PY{p}{,}\PY{n}{StringIndexer}\PY{p}{)}
+        \PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{ml} \PY{k}{import} \PY{n}{Pipeline}
+        
+        \PY{c+c1}{\PYZsh{} Must be included at the beginning of each new notebook. Remember to change the app name.}
+        \PY{k+kn}{import} \PY{n+nn}{findspark}
+        \PY{n}{findspark}\PY{o}{.}\PY{n}{init}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/home/ubuntu/spark\PYZhy{}2.1.1\PYZhy{}bin\PYZhy{}hadoop2.7}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{k+kn}{import} \PY{n+nn}{pyspark}
+        \PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{sql} \PY{k}{import} \PY{n}{SparkSession}
+        \PY{n}{spark} \PY{o}{=} \PY{n}{SparkSession}\PY{o}{.}\PY{n}{builder}\PY{o}{.}\PY{n}{appName}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear\PYZus{}regression\PYZus{}adv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{getOrCreate}\PY{p}{(}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} If you\PYZsq{}re getting an error with numpy, please type \PYZsq{}sudo pip install numpy \PYZhy{}\PYZhy{}user\PYZsq{} into the EC2 console.}
+        \PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{ml}\PY{n+nn}{.}\PY{n+nn}{regression} \PY{k}{import} \PY{n}{LinearRegression}
+        \PY{c+c1}{\PYZsh{} Use Spark to read in the Ecommerce Customers csv file. You can infer csv schemas. }
+        \PY{n}{data} \PY{o}{=} \PY{n}{spark}\PY{o}{.}\PY{n}{read}\PY{o}{.}\PY{n}{csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{dataset.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{inferSchema}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}\PY{n}{header}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Print the schema of the DataFrame. You can see potential features as well as the predictor.}
+        \PY{n}{data}\PY{o}{.}\PY{n}{printSchema}\PY{p}{(}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Let\PYZsq{}s focus on one row to make it easier to read.}
+        \PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} A simple for loop allows us to make it even clearer. }
+        \PY{k}{for} \PY{n}{item} \PY{o+ow}{in} \PY{n}{data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{item}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Import VectorAssembler and Vectors}
+        \PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{ml}\PY{n+nn}{.}\PY{n+nn}{linalg} \PY{k}{import} \PY{n}{Vectors}
+        \PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{ml}\PY{n+nn}{.}\PY{n+nn}{feature} \PY{k}{import} \PY{n}{VectorAssembler}
+        \PY{c+c1}{\PYZsh{} The input columns are the feature column names, and the output column is what you\PYZsq{}d like the new column to be named. }
+        \PY{n}{assembler} \PY{o}{=} \PY{n}{VectorAssembler}\PY{p}{(}
+            \PY{n}{inputCols}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{MonthlyIncome}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}  
+                       \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{YearsAtCompany}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}
+            \PY{n}{outputCol}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{features}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Now that we\PYZsq{}ve created the assembler variable, let\PYZsq{}s actually transform the data.}
+        \PY{n}{output} \PY{o}{=} \PY{n}{assembler}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{data}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Using print schema, you see that the features output column has been added. }
+        \PY{n}{output}\PY{o}{.}\PY{n}{printSchema}\PY{p}{(}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} You can see that the features column is a dense vector that combines the various features as expected.}
+        \PY{n}{output}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Let\PYZsq{}s select two columns (the feature and predictor).}
+        \PY{c+c1}{\PYZsh{} This is now in the appropriate format to be processed by Spark.}
+        \PY{n}{final\PYZus{}data} \PY{o}{=} \PY{n}{output}\PY{o}{.}\PY{n}{select}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{features}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MonthlyIncome}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{final\PYZus{}data}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Let\PYZsq{}s do a randomised 70/30 split. }
+        \PY{c+c1}{\PYZsh{} Remember, you can use other splits depending on how easy/difficult it is to train your model.}
+        \PY{n}{train\PYZus{}data}\PY{p}{,}\PY{n}{test\PYZus{}data} \PY{o}{=} \PY{n}{final\PYZus{}data}\PY{o}{.}\PY{n}{randomSplit}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.7}\PY{p}{,}\PY{l+m+mf}{0.3}\PY{p}{]}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} Let\PYZsq{}s see our training data.}
+        \PY{n}{train\PYZus{}data}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} And our testing data.}
+        \PY{n}{test\PYZus{}data}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{target}\PY{o}{=} \PY{n}{dataset}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{MonthlyIncome}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+        \PY{n}{dataset}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:}    Age Attrition     BusinessTravel  DailyRate              Department  \textbackslash{}
+        0   41       Yes      Travel\_Rarely       1102                   Sales   
+        1   49        No  Travel\_Frequently        279  Research \& Development   
+        2   37       Yes      Travel\_Rarely       1373  Research \& Development   
+        3   33        No  Travel\_Frequently       1392  Research \& Development   
+        4   27        No      Travel\_Rarely        591  Research \& Development   
+        
+           DistanceFromHome  Education EducationField  EmployeeCount  EmployeeNumber  \textbackslash{}
+        0                 1          2  Life Sciences              1               1   
+        1                 8          1  Life Sciences              1               2   
+        2                 2          2          Other              1               4   
+        3                 3          4  Life Sciences              1               5   
+        4                 2          1        Medical              1               7   
+        
+                   {\ldots}           RelationshipSatisfaction StandardHours  \textbackslash{}
+        0          {\ldots}                                  1            80   
+        1          {\ldots}                                  4            80   
+        2          {\ldots}                                  2            80   
+        3          {\ldots}                                  3            80   
+        4          {\ldots}                                  4            80   
+        
+           StockOptionLevel  TotalWorkingYears  TrainingTimesLastYear WorkLifeBalance  \textbackslash{}
+        0                 0                  8                      0               1   
+        1                 1                 10                      3               3   
+        2                 0                  7                      3               3   
+        3                 0                  8                      3               3   
+        4                 1                  6                      3               3   
+        
+           YearsAtCompany YearsInCurrentRole  YearsSinceLastPromotion  \textbackslash{}
+        0               6                  4                        0   
+        1              10                  7                        1   
+        2               0                  0                        0   
+        3               8                  7                        3   
+        4               2                  2                        2   
+        
+           YearsWithCurrManager  
+        0                     5  
+        1                     7  
+        2                     0  
+        3                     0  
+        4                     2  
+        
+        [5 rows x 35 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{dataset}\PY{o}{.}\PY{n}{shape}\PY{p}{)}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{dataset}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{MonthlyIncome}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+(1470, 35)
+
+    \end{Verbatim}
+
+    
+    \begin{verbatim}
+<Figure size 640x480 with 1 Axes>
+    \end{verbatim}
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{dataset}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{MonthlyIncome}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_7_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} Python program showing }
+        \PY{c+c1}{\PYZsh{} Graphical representation   }
+        \PY{c+c1}{\PYZsh{} of log() function }
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np} 
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt} 
+          
+        \PY{n}{in\PYZus{}array} \PY{o}{=} \PY{n}{dataset}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{MonthlyIncome}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} 
+        \PY{n}{out\PYZus{}array} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{log}\PY{p}{(}\PY{n}{in\PYZus{}array}\PY{p}{)} 
+          
+        \PY{n+nb}{print} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{out\PYZus{}array : }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{out\PYZus{}array}\PY{p}{)} 
+          
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{in\PYZus{}array}\PY{p}{,} \PY{n}{in\PYZus{}array}\PY{p}{,}  
+                 \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{marker} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{*}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} 
+          
+        \PY{c+c1}{\PYZsh{} red for numpy.log() }
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{out\PYZus{}array}\PY{p}{,} \PY{n}{in\PYZus{}array}\PY{p}{,}  
+                 \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{red}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{marker} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{o}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} 
+                   
+        \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{numpy.log()}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} 
+        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{out\PYZus{}array}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} 
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{in\PYZus{}array}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} 
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}  
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+out\_array :  0       8.698347
+1       8.542861
+2       7.644919
+3       7.975565
+4       8.151333
+5       8.028781
+6       7.889834
+7       7.898411
+8       9.161780
+9       8.563504
+10      7.793999
+11      8.341172
+12      7.976252
+13      7.886457
+14      7.614805
+15      9.208338
+16      8.101072
+17      7.984463
+18      9.643875
+19      8.279951
+20      8.296796
+21      8.133587
+22      9.392162
+23      7.116394
+24      7.992945
+25      9.857129
+26      8.273592
+27      8.828348
+28      9.234838
+29      9.849401
+          {\ldots}   
+1440    8.543056
+1441    8.749257
+1442    8.473659
+1443    9.845858
+1444    7.757479
+1445    9.515617
+1446    8.811652
+1447    8.595265
+1448    9.098067
+1449    7.799343
+1450    9.086703
+1451    8.583543
+1452    8.814033
+1453    8.802673
+1454    8.486734
+1455    7.940584
+1456    8.646290
+1457    7.601402
+1458    7.998671
+1459    8.300280
+1460    8.238801
+1461    9.292289
+1462    9.395242
+1463    9.203920
+1464    7.994970
+1465    7.852050
+1466    9.209440
+1467    8.722906
+1468    8.592301
+1469    8.390268
+Name: MonthlyIncome, Length: 1470, dtype: float64
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
+
